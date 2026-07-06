@@ -1,6 +1,6 @@
 <?php
 $_ENV['APP_ENV'] = 'production';
-$_ENV['APP_DEBUG'] = 'false';
+$_ENV['APP_DEBUG'] = 'true';
 $_ENV['VIEW_COMPILED_PATH'] = '/tmp';
 $_ENV['SESSION_DRIVER'] = 'cookie';
 $_ENV['LOG_CHANNEL'] = 'stderr';
