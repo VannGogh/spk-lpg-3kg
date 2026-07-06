@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    body {
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        background-color: #f1f5f9; /* Slate 100 */
+        background-image: 
+            radial-gradient(at 40% 20%, hsla(28,100%,74%,0.1) 0px, transparent 50%),
+            radial-gradient(at 80% 0%, hsla(189,100%,56%,0.1) 0px, transparent 50%),
+            radial-gradient(at 0% 50%, hsla(355,100%,93%,0.1) 0px, transparent 50%);
+        background-attachment: fixed;
+    }
+}
+
+/* Glassmorphism utility */
+.glass {
+    @apply bg-white/70 backdrop-blur-lg border border-white/40 shadow-xl;
+}
+
+/* Smooth transition for all interactive elements */
+button, a, input, select {
+    @apply transition-all duration-300 ease-out;
+}
