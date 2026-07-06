@@ -7,6 +7,11 @@ $_ENV['LOG_CHANNEL'] = 'stderr';
 $_ENV['CACHE_STORE'] = 'array';
 $_ENV['QUEUE_CONNECTION'] = 'sync';
 
+// FORCE OVERRIDE DB USERNAME UNTUK SUPABASE POOLER
+$_ENV['DB_USERNAME'] = 'postgres.inartlouzsiknnywvgmh';
+putenv('DB_USERNAME=postgres.inartlouzsiknnywvgmh');
+$_SERVER['DB_USERNAME'] = 'postgres.inartlouzsiknnywvgmh';
+
 putenv('APP_DEBUG=true');
 $_SERVER['APP_DEBUG'] = 'true';
 
