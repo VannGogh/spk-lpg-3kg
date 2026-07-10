@@ -1,7 +1,5 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, Link, useForm, router } from '@inertiajs/react';
-import PrimaryButton from '@/Components/PrimaryButton';
-import DangerButton from '@/Components/DangerButton';
 import { useState } from 'react';
 
 export default function Index({ warungs, filters }) {
@@ -28,27 +26,41 @@ export default function Index({ warungs, filters }) {
 
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                        <div className="p-6 text-gray-900">
-                            <div className="flex justify-between items-center mb-6">
-                                <h3 className="text-lg font-medium">Daftar Mitra Warung</h3>
-                                <Link href={route('warungs.create')}>
-                                    <PrimaryButton>Tambah Warung</PrimaryButton>
-                                </Link>
-                            </div>
+                    {/* Main Card */}
+                    <div className="bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100 p-6 md:p-8 flex flex-col gap-6">
+                        
+                        {/* Toolbar & Title */}
+                        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                            <h3 className="text-lg font-semibold text-gray-900">Daftar Mitra Warung</h3>
+                            <Link href={route('warungs.create')}>
+                                <button className="bg-indigo-600 text-white hover:bg-indigo-700 px-4 py-2.5 rounded-lg text-sm font-medium transition-colors flex items-center gap-2 shadow-sm">
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clipRule="evenodd" />
+                                    </svg>
+                                    Tambah Warung
+                                </button>
+                            </Link>
+                        </div>
 
-                            <form onSubmit={handleFilter} className="mb-6 flex space-x-4">
+                        {/* Filters */}
+                        <form onSubmit={handleFilter} className="flex flex-col sm:flex-row gap-4">
+                            <div className="relative flex-1 max-w-md">
+                                <svg xmlns="http://www.w3.org/2000/svg" className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                </svg>
                                 <input
                                     type="text"
                                     placeholder="Cari nama warung..."
                                     value={search}
                                     onChange={e => setSearch(e.target.value)}
-                                    className="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
+                                    className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-gray-200 bg-gray-50 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 focus:outline-none transition-all shadow-sm"
                                 />
+                            </div>
+                            <div className="flex gap-3">
                                 <select 
                                     value={hariDistribusi} 
                                     onChange={e => setHariDistribusi(e.target.value)}
-                                    className="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
+                                    className="px-4 py-2.5 rounded-lg border border-gray-200 bg-gray-50 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 focus:outline-none min-w-[140px] shadow-sm cursor-pointer"
                                 >
                                     <option value="">Semua Hari</option>
                                     <option value="Senin">Senin</option>
@@ -59,81 +71,107 @@ export default function Index({ warungs, filters }) {
                                     <option value="Sabtu">Sabtu</option>
                                     <option value="Minggu">Minggu</option>
                                 </select>
-                                <PrimaryButton type="submit">Filter</PrimaryButton>
-                            </form>
+                                <button type="submit" className="bg-gray-900 text-white hover:bg-gray-800 px-5 py-2.5 rounded-lg text-sm font-medium transition-colors shadow-sm">
+                                    Filter
+                                </button>
+                            </div>
+                        </form>
 
-                            <div className="overflow-x-auto">
-                                <table className="w-full text-sm text-left text-gray-500">
-                                    <thead className="text-xs text-gray-700 uppercase bg-gray-50 border-b">
+                        {/* Table */}
+                        <div className="overflow-x-auto rounded-xl border border-gray-100 shadow-sm">
+                            <table className="w-full text-left border-collapse">
+                                <thead>
+                                    <tr className="bg-gray-50/80 border-b border-gray-100">
+                                        <th className="py-4 px-5 text-xs font-semibold text-gray-500 uppercase tracking-wider">Nama Warung</th>
+                                        <th className="py-4 px-5 text-xs font-semibold text-gray-500 uppercase tracking-wider">Hari Distribusi</th>
+                                        <th className="py-4 px-5 text-xs font-semibold text-gray-500 uppercase tracking-wider">Alamat</th>
+                                        <th className="py-4 px-5 text-xs font-semibold text-gray-500 uppercase tracking-wider">Status</th>
+                                        <th className="py-4 px-5 text-xs font-semibold text-gray-500 uppercase tracking-wider">Kategori (Margin)</th>
+                                        <th className="py-4 px-5 text-xs font-semibold text-gray-500 uppercase tracking-wider">Pembayaran</th>
+                                        <th className="py-4 px-5 text-xs font-semibold text-gray-500 uppercase tracking-wider">MG / MGA</th>
+                                        <th className="py-4 px-5 text-xs font-semibold text-gray-500 uppercase tracking-wider text-right">Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody className="divide-y divide-gray-50">
+                                    {warungs.data.length === 0 ? (
                                         <tr>
-                                            <th className="px-6 py-3">Nama Warung</th>
-                                            <th className="px-6 py-3">Hari Distribusi</th>
-                                            <th className="px-6 py-3">Alamat</th>
-                                            <th className="px-6 py-3">Status</th>
-                                            <th className="px-6 py-3">Kategori (Margin)</th>
-                                            <th className="px-6 py-3">Pembayaran</th>
-                                            <th className="px-6 py-3">MG / MGA</th>
-                                            <th className="px-6 py-3 text-right">Aksi</th>
+                                            <td colSpan="8" className="py-8 px-5 text-center text-gray-500">
+                                                <div className="flex flex-col items-center justify-center">
+                                                    <svg className="w-12 h-12 text-gray-300 mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
+                                                    </svg>
+                                                    <p>Belum ada data warung.</p>
+                                                </div>
+                                            </td>
                                         </tr>
-                                    </thead>
-                                    <tbody>
-                                        {warungs.data.length === 0 ? (
-                                            <tr>
-                                                <td colSpan="8" className="px-6 py-4 text-center">Belum ada data warung.</td>
-                                            </tr>
-                                        ) : (
-                                            warungs.data.map((warung) => (
-                                                <tr key={warung.id} className="bg-white border-b hover:bg-gray-50">
-                                                    <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                                                        {warung.name}
-                                                    </td>
-                                                    <td className="px-6 py-4">{warung.hari_distribusi || '-'}</td>
-                                                    <td className="px-6 py-4">{warung.address || '-'}</td>
-                                                    <td className="px-6 py-4">
-                                                        {warung.is_active ? (
-                                                            <span className="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded">Aktif</span>
-                                                        ) : (
-                                                            <span className="bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded">Tidak Aktif</span>
-                                                        )}
-                                                    </td>
-                                                    <td className="px-6 py-4">
-                                                        {warung.margin_category === 3 ? 'Kecil (Margin Tinggi)' : 'Besar (Margin Rendah)'}
-                                                    </td>
-                                                    <td className="px-6 py-4">
-                                                        {warung.payment_status === 3 ? 'Lancar' : warung.payment_status === 2 ? 'Kurang Lancar' : 'Tidak Lancar'}
-                                                    </td>
-                                                    <td className="px-6 py-4">{warung.mg_normal} / {warung.mg_absolut}</td>
-                                                    <td className="px-6 py-4 text-right space-x-2 flex justify-end">
-                                                        <Link href={route('warungs.edit', warung.id)} className="text-blue-600 hover:underline px-2 py-1">Edit</Link>
+                                    ) : (
+                                        warungs.data.map((warung) => (
+                                            <tr key={warung.id} className="bg-white hover:bg-gray-50/50 transition-colors">
+                                                <td className="py-4 px-5 text-sm font-medium text-gray-900 whitespace-nowrap">
+                                                    {warung.name}
+                                                </td>
+                                                <td className="py-4 px-5 text-sm text-gray-500">{warung.hari_distribusi || '-'}</td>
+                                                <td className="py-4 px-5 text-sm text-gray-500 max-w-[200px] truncate" title={warung.address}>{warung.address || '-'}</td>
+                                                <td className="py-4 px-5">
+                                                    {warung.is_active ? (
+                                                        <span className="inline-flex items-center px-2.5 py-1 rounded-full text-[11px] font-medium bg-emerald-50 text-emerald-700 ring-1 ring-emerald-600/20">Aktif</span>
+                                                    ) : (
+                                                        <span className="inline-flex items-center px-2.5 py-1 rounded-full text-[11px] font-medium bg-red-50 text-red-700 ring-1 ring-red-600/20">Tidak Aktif</span>
+                                                    )}
+                                                </td>
+                                                <td className="py-4 px-5 text-sm text-gray-500">
+                                                    {warung.margin_category === 3 ? (
+                                                        <span className="inline-flex items-center px-2.5 py-1 rounded-md text-[11px] font-medium bg-blue-50 text-blue-700">Margin Tinggi</span>
+                                                    ) : (
+                                                        <span className="inline-flex items-center px-2.5 py-1 rounded-md text-[11px] font-medium bg-gray-100 text-gray-700">Margin Rendah</span>
+                                                    )}
+                                                </td>
+                                                <td className="py-4 px-5">
+                                                    {warung.payment_status === 3 ? (
+                                                        <span className="text-sm text-emerald-600 font-medium">Lancar</span>
+                                                    ) : warung.payment_status === 2 ? (
+                                                        <span className="text-sm text-amber-600 font-medium">Kurang Lancar</span>
+                                                    ) : (
+                                                        <span className="text-sm text-red-600 font-medium">Tidak Lancar</span>
+                                                    )}
+                                                </td>
+                                                <td className="py-4 px-5 text-sm font-semibold text-indigo-600">{warung.mg_normal} / {warung.mg_absolut}</td>
+                                                <td className="py-4 px-5 text-right">
+                                                    <div className="flex justify-end gap-3">
+                                                        <Link href={route('warungs.edit', warung.id)} className="text-indigo-600 hover:text-indigo-800 text-sm font-medium transition-colors">Edit</Link>
                                                         <button 
                                                             onClick={() => handleDelete(warung.id)}
-                                                            className="text-red-600 hover:underline px-2 py-1"
+                                                            className="text-red-500 hover:text-red-700 text-sm font-medium transition-colors"
                                                         >
                                                             Hapus
                                                         </button>
-                                                    </td>
-                                                </tr>
-                                            ))
-                                        )}
-                                    </tbody>
-                                </table>
-                            </div>
-                            
-                            {/* Simple Pagination */}
-                            <div className="mt-4 flex justify-between items-center">
-                                <span className="text-sm text-gray-500">
-                                    Showing {warungs.from || 0} to {warungs.to || 0} of {warungs.total} entries
-                                </span>
-                                <div className="flex space-x-1">
-                                    {warungs.links.map((link, index) => (
-                                        <Link 
-                                            key={index} 
-                                            href={link.url || '#'}
-                                            className={`px-3 py-1 border rounded text-sm ${link.active ? 'bg-indigo-50 text-indigo-600 border-indigo-200' : 'bg-white hover:bg-gray-50'} ${!link.url && 'opacity-50 cursor-not-allowed'}`}
-                                            dangerouslySetInnerHTML={{ __html: link.label }}
-                                        />
-                                    ))}
-                                </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        ))
+                                    )}
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        {/* Pagination */}
+                        <div className="mt-2 flex flex-col sm:flex-row justify-between items-center gap-4">
+                            <span className="text-sm text-gray-500">
+                                Menampilkan {warungs.from || 0} sampai {warungs.to || 0} dari {warungs.total} entri
+                            </span>
+                            <div className="flex flex-wrap gap-1">
+                                {warungs.links.map((link, index) => (
+                                    <Link 
+                                        key={index} 
+                                        href={link.url || '#'}
+                                        className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
+                                            link.active 
+                                                ? 'bg-indigo-50 text-indigo-700 ring-1 ring-indigo-600/20' 
+                                                : 'bg-white text-gray-500 hover:bg-gray-50 border border-gray-200'
+                                        } ${!link.url && 'opacity-50 cursor-not-allowed'}`}
+                                        dangerouslySetInnerHTML={{ __html: link.label }}
+                                    />
+                                ))}
                             </div>
                         </div>
                     </div>
