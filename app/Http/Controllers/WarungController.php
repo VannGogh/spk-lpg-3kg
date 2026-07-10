@@ -11,8 +11,19 @@ class WarungController extends Controller
 {
     public function index()
     {
+        $query = Warung::latest();
+
+        if (request('search')) {
+            $query->where('name', 'like', '%' . request('search') . '%');
+        }
+
+        if (request('hari_distribusi')) {
+            $query->where('hari_distribusi', request('hari_distribusi'));
+        }
+
         return Inertia::render('Warung/Index', [
-            'warungs' => Warung::latest()->paginate(10)
+            'warungs' => $query->paginate(10)->withQueryString(),
+            'filters' => request()->only(['search', 'hari_distribusi'])
         ]);
     }
 

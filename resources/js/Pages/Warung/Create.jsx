@@ -10,6 +10,7 @@ export default function Create() {
         name: '',
         address: '',
         phone: '',
+        hari_distribusi: '',
         is_active: true,
         payment_status: 3,
         margin_category: 1,
@@ -68,6 +69,26 @@ export default function Create() {
                                     onChange={(e) => setData('phone', e.target.value)}
                                 />
                                 <InputError message={errors.phone} className="mt-2" />
+                            </div>
+
+                            <div>
+                                <InputLabel htmlFor="hari_distribusi" value="Hari Distribusi" />
+                                <select
+                                    id="hari_distribusi"
+                                    className="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
+                                    value={data.hari_distribusi}
+                                    onChange={(e) => setData('hari_distribusi', e.target.value)}
+                                >
+                                    <option value="">Pilih Hari (Opsional)</option>
+                                    <option value="Senin">Senin</option>
+                                    <option value="Selasa">Selasa</option>
+                                    <option value="Rabu">Rabu</option>
+                                    <option value="Kamis">Kamis</option>
+                                    <option value="Jumat">Jumat</option>
+                                    <option value="Sabtu">Sabtu</option>
+                                    <option value="Minggu">Minggu</option>
+                                </select>
+                                <InputError message={errors.hari_distribusi} className="mt-2" />
                             </div>
 
                             <div className="grid grid-cols-2 gap-4">

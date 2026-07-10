@@ -17,6 +17,7 @@ class UpdateWarungRequest extends FormRequest
             'name' => 'required|string|max:255',
             'address' => 'nullable|string',
             'phone' => 'nullable|string',
+            'hari_distribusi' => 'nullable|string',
             'is_active' => 'boolean',
             'payment_status' => 'required|in:1,2,3',
             'margin_category' => 'required|in:1,3',
