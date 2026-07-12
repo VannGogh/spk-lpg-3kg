@@ -133,7 +133,7 @@ export default function Dashboard({ distributions }) {
                         </div>
                         
                         <div className="p-0 overflow-x-auto">
-                            <table className="w-full text-sm text-left text-slate-600">
+                            <table className="w-full text-sm text-left text-slate-600 whitespace-nowrap">
                                 <thead className="text-xs text-slate-500 uppercase bg-slate-50/50">
                                     <tr>
                                         <th className="px-6 py-4 font-bold">Tanggal</th>
