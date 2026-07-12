@@ -1,11 +1,13 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, Link, useForm } from '@inertiajs/react';
+import { useState } from 'react';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import InputLabel from '@/Components/InputLabel';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 export default function Dashboard({ distributions }) {
+    const [showAllCols, setShowAllCols] = useState(false);
     const { data, setData, post, processing, errors } = useForm({
         date: new Date().toISOString().split('T')[0],
         total_stock: '',
@@ -130,6 +132,7 @@ export default function Dashboard({ distributions }) {
                                 </div>
                                 <h3 className="text-xl font-bold text-slate-800">Riwayat Distribusi</h3>
                             </div>
+                            <button onClick={() => setShowAllCols(!showAllCols)} className="md:hidden text-sm text-indigo-600 font-medium bg-indigo-50 px-3 py-1.5 rounded-lg border border-indigo-100">{showAllCols ? 'Ringkas' : 'Buka Semua Kolom'}</button>
                         </div>
                         
                         <div className="p-0 overflow-x-auto">
@@ -137,8 +140,8 @@ export default function Dashboard({ distributions }) {
                                 <thead className="text-xs text-slate-500 uppercase bg-slate-50/50">
                                     <tr>
                                         <th className="px-6 py-4 font-bold">Tanggal</th>
-                                        <th className="px-6 py-4 font-bold hidden md:table-cell">Total Stok</th>
-                                        <th className="px-6 py-4 font-bold hidden md:table-cell">Alpha</th>
+                                        <th className={`px-6 py-4 font-bold ${showAllCols ? '' : 'hidden md:table-cell'}`}>Total Stok</th>
+                                        <th className={`px-6 py-4 font-bold ${showAllCols ? '' : 'hidden md:table-cell'}`}>Alpha</th>
                                         <th className="px-6 py-4 font-bold">Status</th>
                                         <th className="px-6 py-4 font-bold text-right">Aksi</th>
                                     </tr>
@@ -152,8 +155,8 @@ export default function Dashboard({ distributions }) {
                                         distributions.data.map((dist) => (
                                             <tr key={dist.id} className="border-b border-slate-100 bg-white/30 hover:bg-white/60 transition-colors">
                                                 <td className="px-6 py-4 font-semibold text-slate-800">{new Date(dist.date).toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</td>
-                                                <td className="px-6 py-4 font-medium hidden md:table-cell">{dist.total_stock} Tabung</td>
-                                                <td className="px-6 py-4 font-medium hidden md:table-cell">{dist.alpha_capping}</td>
+                                                <td className={`px-6 py-4 font-medium ${showAllCols ? '' : 'hidden md:table-cell'}`}>{dist.total_stock} Tabung</td>
+                                                <td className={`px-6 py-4 font-medium ${showAllCols ? '' : 'hidden md:table-cell'}`}>{dist.alpha_capping}</td>
                                                 <td className="px-6 py-4">
                                                     {dist.status === 'draft' && <span className="bg-amber-100 text-amber-800 border border-amber-200 px-3 py-1 rounded-full text-xs font-bold shadow-sm">Draft SPK</span>}
                                                     {dist.status === 'locked' && <span className="bg-indigo-100 text-indigo-800 border border-indigo-200 px-3 py-1 rounded-full text-xs font-bold shadow-sm">Terkunci (Otw)</span>}
