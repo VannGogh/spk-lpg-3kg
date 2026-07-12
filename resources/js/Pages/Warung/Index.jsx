@@ -84,12 +84,12 @@ export default function Index({ warungs, filters }) {
                                 <thead>
                                     <tr className="bg-gray-50/80 border-b border-gray-100">
                                         <th className="py-4 px-5 text-xs font-semibold text-gray-500 uppercase tracking-wider">Nama Warung</th>
-                                        <th className="py-4 px-5 text-xs font-semibold text-gray-500 uppercase tracking-wider">Hari Distribusi</th>
-                                        <th className="py-4 px-5 text-xs font-semibold text-gray-500 uppercase tracking-wider">Alamat</th>
+                                        <th className="py-4 px-5 text-xs font-semibold text-gray-500 uppercase tracking-wider hidden md:table-cell">Hari Distribusi</th>
+                                        <th className="py-4 px-5 text-xs font-semibold text-gray-500 uppercase tracking-wider hidden md:table-cell">Alamat</th>
                                         <th className="py-4 px-5 text-xs font-semibold text-gray-500 uppercase tracking-wider">Status</th>
-                                        <th className="py-4 px-5 text-xs font-semibold text-gray-500 uppercase tracking-wider">Kategori (Margin)</th>
-                                        <th className="py-4 px-5 text-xs font-semibold text-gray-500 uppercase tracking-wider">Pembayaran</th>
-                                        <th className="py-4 px-5 text-xs font-semibold text-gray-500 uppercase tracking-wider">MG / MGA</th>
+                                        <th className="py-4 px-5 text-xs font-semibold text-gray-500 uppercase tracking-wider hidden md:table-cell">Kategori (Margin)</th>
+                                        <th className="py-4 px-5 text-xs font-semibold text-gray-500 uppercase tracking-wider hidden md:table-cell">Pembayaran</th>
+                                        <th className="py-4 px-5 text-xs font-semibold text-gray-500 uppercase tracking-wider hidden md:table-cell">MG / MGA</th>
                                         <th className="py-4 px-5 text-xs font-semibold text-gray-500 uppercase tracking-wider text-right">Aksi</th>
                                     </tr>
                                 </thead>
@@ -111,8 +111,8 @@ export default function Index({ warungs, filters }) {
                                                 <td className="py-4 px-5 text-sm font-medium text-gray-900 whitespace-nowrap">
                                                     {warung.name}
                                                 </td>
-                                                <td className="py-4 px-5 text-sm text-gray-500">{warung.hari_distribusi || '-'}</td>
-                                                <td className="py-4 px-5 text-sm text-gray-500 max-w-[200px] truncate" title={warung.address}>{warung.address || '-'}</td>
+                                                <td className="py-4 px-5 text-sm text-gray-500 hidden md:table-cell">{warung.hari_distribusi || '-'}</td>
+                                                <td className="py-4 px-5 text-sm text-gray-500 max-w-[200px] truncate hidden md:table-cell" title={warung.address}>{warung.address || '-'}</td>
                                                 <td className="py-4 px-5">
                                                     {warung.is_active ? (
                                                         <span className="inline-flex items-center px-2.5 py-1 rounded-full text-[11px] font-medium bg-emerald-50 text-emerald-700 ring-1 ring-emerald-600/20">Aktif</span>
@@ -120,14 +120,14 @@ export default function Index({ warungs, filters }) {
                                                         <span className="inline-flex items-center px-2.5 py-1 rounded-full text-[11px] font-medium bg-red-50 text-red-700 ring-1 ring-red-600/20">Tidak Aktif</span>
                                                     )}
                                                 </td>
-                                                <td className="py-4 px-5 text-sm text-gray-500">
+                                                <td className="py-4 px-5 text-sm text-gray-500 hidden md:table-cell">
                                                     {warung.margin_category === 3 ? (
                                                         <span className="inline-flex items-center px-2.5 py-1 rounded-md text-[11px] font-medium bg-blue-50 text-blue-700">Margin Tinggi</span>
                                                     ) : (
                                                         <span className="inline-flex items-center px-2.5 py-1 rounded-md text-[11px] font-medium bg-gray-100 text-gray-700">Margin Rendah</span>
                                                     )}
                                                 </td>
-                                                <td className="py-4 px-5">
+                                                <td className="py-4 px-5 hidden md:table-cell">
                                                     {warung.payment_status === 3 ? (
                                                         <span className="text-sm text-emerald-600 font-medium">Lancar</span>
                                                     ) : warung.payment_status === 2 ? (
@@ -136,7 +136,7 @@ export default function Index({ warungs, filters }) {
                                                         <span className="text-sm text-red-600 font-medium">Tidak Lancar</span>
                                                     )}
                                                 </td>
-                                                <td className="py-4 px-5 text-sm font-semibold text-indigo-600">{warung.mg_normal} / {warung.mg_absolut}</td>
+                                                <td className="py-4 px-5 text-sm font-semibold text-indigo-600 hidden md:table-cell">{warung.mg_normal} / {warung.mg_absolut}</td>
                                                 <td className="py-4 px-5 text-right">
                                                     <div className="flex justify-end gap-3">
                                                         <Link href={route('warungs.edit', warung.id)} className="text-indigo-600 hover:text-indigo-800 text-sm font-medium transition-colors">Edit</Link>

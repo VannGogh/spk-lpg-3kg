@@ -137,8 +137,8 @@ export default function Dashboard({ distributions }) {
                                 <thead className="text-xs text-slate-500 uppercase bg-slate-50/50">
                                     <tr>
                                         <th className="px-6 py-4 font-bold">Tanggal</th>
-                                        <th className="px-6 py-4 font-bold">Total Stok</th>
-                                        <th className="px-6 py-4 font-bold">Alpha</th>
+                                        <th className="px-6 py-4 font-bold hidden md:table-cell">Total Stok</th>
+                                        <th className="px-6 py-4 font-bold hidden md:table-cell">Alpha</th>
                                         <th className="px-6 py-4 font-bold">Status</th>
                                         <th className="px-6 py-4 font-bold text-right">Aksi</th>
                                     </tr>
@@ -152,8 +152,8 @@ export default function Dashboard({ distributions }) {
                                         distributions.data.map((dist) => (
                                             <tr key={dist.id} className="border-b border-slate-100 bg-white/30 hover:bg-white/60 transition-colors">
                                                 <td className="px-6 py-4 font-semibold text-slate-800">{new Date(dist.date).toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</td>
-                                                <td className="px-6 py-4 font-medium">{dist.total_stock} Tabung</td>
-                                                <td className="px-6 py-4 font-medium">{dist.alpha_capping}</td>
+                                                <td className="px-6 py-4 font-medium hidden md:table-cell">{dist.total_stock} Tabung</td>
+                                                <td className="px-6 py-4 font-medium hidden md:table-cell">{dist.alpha_capping}</td>
                                                 <td className="px-6 py-4">
                                                     {dist.status === 'draft' && <span className="bg-amber-100 text-amber-800 border border-amber-200 px-3 py-1 rounded-full text-xs font-bold shadow-sm">Draft SPK</span>}
                                                     {dist.status === 'locked' && <span className="bg-indigo-100 text-indigo-800 border border-indigo-200 px-3 py-1 rounded-full text-xs font-bold shadow-sm">Terkunci (Otw)</span>}
