@@ -3,7 +3,7 @@ import { Head, Link, useForm } from '@inertiajs/react';
 import PrimaryButton from '@/Components/PrimaryButton';
 import DangerButton from '@/Components/DangerButton';
 
-export default function Workspace({ distribution }) {
+export default function Workspace({ distribution, hari_distribusi }) {
     const formSpk = useForm({
         details: distribution.details.map(d => ({
             id: d.id,
@@ -45,6 +45,11 @@ export default function Workspace({ distribution }) {
                 <div className="flex justify-between items-center">
                     <h2 className="font-extrabold text-2xl bg-clip-text text-transparent bg-gradient-to-r from-slate-800 to-indigo-600 leading-tight">
                         Workspace SPK: {new Date(distribution.date).toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
+                        {hari_distribusi && (
+                            <span className="ml-3 text-sm font-bold bg-indigo-50 text-indigo-700 border border-indigo-150 px-2.5 py-1 rounded-lg">
+                                Hari Alokasi: {hari_distribusi}
+                            </span>
+                        )}
                     </h2>
                     <Link href={route('dashboard')} className="text-sm font-semibold text-slate-500 hover:text-indigo-600 transition-colors">
                         &larr; Kembali ke Dashboard

@@ -4,18 +4,26 @@ import { useState } from 'react';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import InputLabel from '@/Components/InputLabel';
+import Modal from '@/Components/Modal';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 export default function Dashboard({ distributions }) {
     const [showAllCols, setShowAllCols] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const { data, setData, post, processing, errors } = useForm({
         date: new Date().toISOString().split('T')[0],
         total_stock: '',
         alpha_capping: 1.0,
+        hari: 'Senin',
     });
 
-    const submit = (e) => {
+    const handleOpenModal = (e) => {
         e.preventDefault();
+        setIsModalOpen(true);
+    };
+
+    const confirmSubmit = () => {
+        setIsModalOpen(false);
         post(route('distributions.store'));
     };
 
@@ -46,7 +54,7 @@ export default function Dashboard({ distributions }) {
                             <h3 className="text-xl font-bold text-slate-800">Buat Manifes Distribusi Baru</h3>
                         </div>
 
-                        <form onSubmit={submit} className="grid grid-cols-1 md:grid-cols-4 gap-6 items-end bg-white/40 p-6 rounded-xl border border-white/60">
+                        <form onSubmit={handleOpenModal} className="grid grid-cols-1 md:grid-cols-4 gap-6 items-end bg-white/40 p-6 rounded-xl border border-white/60">
                             <div>
                                 <InputLabel htmlFor="date" value="Tanggal Distribusi" className="font-semibold text-slate-700" />
                                 <TextInput
@@ -185,6 +193,50 @@ export default function Dashboard({ distributions }) {
 
                 </div>
             </div>
+
+            <Modal show={isModalOpen} onClose={() => setIsModalOpen(false)} maxWidth="md">
+                <div className="p-6">
+                    <h2 className="text-xl font-bold text-slate-800 mb-2">Pilih Hari Distribusi</h2>
+                    <p className="text-sm text-slate-600 mb-6">
+                        Silakan pilih hari untuk siklus alokasi ini. Data warung yang ditarik hanya yang terjadwal pada hari tersebut.
+                    </p>
+                    
+                    <div className="mb-6">
+                        <InputLabel htmlFor="modal_hari" value="Hari Distribusi" className="font-semibold text-slate-700 mb-2" />
+                        <select
+                            id="modal_hari"
+                            className="block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-lg shadow-sm font-semibold text-slate-700"
+                            value={data.hari}
+                            onChange={(e) => setData('hari', e.target.value)}
+                        >
+                            <option value="Senin">Senin</option>
+                            <option value="Selasa">Selasa</option>
+                            <option value="Rabu">Rabu</option>
+                            <option value="Kamis">Kamis</option>
+                            <option value="Jumat">Jumat</option>
+                            <option value="Sabtu">Sabtu</option>
+                        </select>
+                    </div>
+
+                    <div className="flex justify-end gap-3">
+                        <button
+                            type="button"
+                            onClick={() => setIsModalOpen(false)}
+                            className="px-4 py-2 text-sm font-bold text-slate-500 hover:text-slate-700 transition-colors border border-slate-200 rounded-lg"
+                        >
+                            Batal
+                        </button>
+                        <PrimaryButton
+                            type="button"
+                            onClick={confirmSubmit}
+                            disabled={processing}
+                            className="px-5 py-2 text-sm justify-center"
+                        >
+                            Konfirmasi & Buat
+                        </PrimaryButton>
+                    </div>
+                </div>
+            </Modal>
         </AuthenticatedLayout>
     );
 }

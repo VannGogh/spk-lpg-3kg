@@ -38,12 +38,16 @@ class DistributionController extends Controller
             'date' => 'required|date|unique:distributions,date',
             'total_stock' => 'required|integer|min:1',
             'alpha_capping' => 'required|numeric|min:0.1|max:1.0',
+            'hari' => 'required|string|in:Senin,Selasa,Rabu,Kamis,Jumat,Sabtu',
         ]);
 
         $distribution = Distribution::create($request->only('date', 'total_stock', 'alpha_capping'));
 
-        // Otomatis tarik semua warung aktif ke detail manifes hari ini
-        $warungs = Warung::where('is_active', true)->get();
+        // Otomatis tarik semua warung aktif ke detail manifes hari ini berdasarkan hari yang dipilih
+        $warungs = Warung::where('is_active', true)
+            ->where('hari_distribusi', $request->hari)
+            ->get();
+
         foreach ($warungs as $warung) {
             DistributionDetail::create([
                 'distribution_id' => $distribution->id,
@@ -60,8 +64,12 @@ class DistributionController extends Controller
     public function edit(Distribution $distribution)
     {
         $distribution->load('details.warung');
+        // ponytail: inferred day from details to avoid DB migration. Upgrade path: add 'hari' column to 'distributions' table if mixed-day cycles are allowed.
+        $hari_distribusi = $distribution->details->first()?->warung?->hari_distribusi;
+
         return Inertia::render('Distribution/Workspace', [
-            'distribution' => $distribution
+            'distribution' => $distribution,
+            'hari_distribusi' => $hari_distribusi,
         ]);
     }
 
