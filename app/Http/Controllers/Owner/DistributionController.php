@@ -189,4 +189,10 @@ class DistributionController extends Controller
         $distribution->update(['status' => 'completed']);
         return back()->with('message', 'Manifes hari ini telah selesai dikerjakan.');
     }
+
+    public function destroy(Distribution $distribution)
+    {
+        $distribution->delete();
+        return back()->with('message', 'Riwayat distribusi berhasil dihapus.');
+    }
 }
