@@ -10,6 +10,7 @@ import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContai
 export default function Dashboard({ distributions }) {
     const [showAllCols, setShowAllCols] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [deleteId, setDeleteId] = useState(null);
     const { data, setData, post, processing, errors } = useForm({
         date: new Date().toISOString().split('T')[0],
         total_stock: '',
@@ -171,11 +172,11 @@ export default function Dashboard({ distributions }) {
                                                     {dist.status === 'completed' && <span className="bg-emerald-100 text-emerald-800 border border-emerald-200 px-3 py-1 rounded-full text-xs font-bold shadow-sm">Selesai</span>}
                                                 </td>
                                                 <td className="px-6 py-4 text-right space-x-4">
-                                                    <Link href={route('distributions.destroy', dist.id)} method="delete" as="button" onClick={(e) => { if(!confirm('Hapus riwayat ini?')) e.preventDefault() }} className="inline-flex items-center text-sm font-bold text-red-600 hover:text-red-800 transition-colors">
+                                                    <button onClick={() => setDeleteId(dist.id)} className="inline-flex items-center text-sm font-bold text-red-600 hover:text-red-800 transition-colors">
                                                         Hapus
-                                                    </Link>
+                                                    </button>
                                                     {dist.status === 'locked' || dist.status === 'completed' ? (
-                                                        <a href={route('distributions.pdf', dist.id)} target="_blank" rel="noreferrer" className="inline-flex items-center text-sm font-bold text-rose-600 hover:text-rose-800 transition-colors">
+                                                        <a href={route('distributions.pdf', dist.id)} target="_blank" rel="noreferrer" className="inline-flex items-center text-sm font-bold text-emerald-600 hover:text-emerald-800 transition-colors">
                                                             Cetak PDF
                                                         </a>
                                                     ) : null}
@@ -237,6 +238,17 @@ export default function Dashboard({ distributions }) {
                         >
                             Konfirmasi & Buat
                         </PrimaryButton>
+                    </div>
+                </div>
+            </Modal>
+
+            <Modal show={!!deleteId} onClose={() => setDeleteId(null)} maxWidth="sm">
+                <div className="p-6">
+                    <h2 className="text-xl font-bold text-slate-800 mb-4">Hapus Riwayat?</h2>
+                    <p className="text-sm text-slate-600 mb-6">Tindakan ini tidak dapat dibatalkan.</p>
+                    <div className="flex justify-end gap-3">
+                        <button onClick={() => setDeleteId(null)} className="px-4 py-2 text-sm font-bold text-slate-500 hover:text-slate-700 transition-colors border border-slate-200 rounded-lg">Batal</button>
+                        <Link href={deleteId ? route('distributions.destroy', deleteId) : '#'} method="delete" as="button" onClick={() => setDeleteId(null)} className="px-4 py-2 bg-red-600 text-white rounded-lg font-bold text-sm hover:bg-red-700">Hapus Permanen</Link>
                     </div>
                 </div>
             </Modal>
