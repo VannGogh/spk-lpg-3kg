@@ -171,6 +171,9 @@ export default function Dashboard({ distributions }) {
                                                     {dist.status === 'completed' && <span className="bg-emerald-100 text-emerald-800 border border-emerald-200 px-3 py-1 rounded-full text-xs font-bold shadow-sm">Selesai</span>}
                                                 </td>
                                                 <td className="px-6 py-4 text-right space-x-4">
+                                                    <Link href={route('distributions.destroy', dist.id)} method="delete" as="button" onClick={(e) => { if(!confirm('Hapus riwayat ini?')) e.preventDefault() }} className="inline-flex items-center text-sm font-bold text-red-600 hover:text-red-800 transition-colors">
+                                                        Hapus
+                                                    </Link>
                                                     {dist.status === 'locked' || dist.status === 'completed' ? (
                                                         <a href={route('distributions.pdf', dist.id)} target="_blank" rel="noreferrer" className="inline-flex items-center text-sm font-bold text-rose-600 hover:text-rose-800 transition-colors">
                                                             Cetak PDF

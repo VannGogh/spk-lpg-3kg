@@ -19,6 +19,7 @@ Route::middleware('auth')->group(function () {
     
     // Rute Engine SPK & Distribusi Harian
     Route::post('/distributions', [\App\Http\Controllers\Owner\DistributionController::class, 'store'])->name('distributions.store');
+    Route::delete('/distributions/{distribution}', [\App\Http\Controllers\Owner\DistributionController::class, 'destroy'])->name('distributions.destroy');
     Route::get('/distributions/{distribution}/edit', [\App\Http\Controllers\Owner\DistributionController::class, 'edit'])->name('distributions.edit');
     Route::post('/distributions/{distribution}/calculate', [\App\Http\Controllers\Owner\DistributionController::class, 'calculate'])->name('distributions.calculate');
     Route::post('/distributions/{distribution}/override', [\App\Http\Controllers\Owner\DistributionController::class, 'override'])->name('distributions.override');
